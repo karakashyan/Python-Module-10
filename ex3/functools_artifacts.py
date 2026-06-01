@@ -54,3 +54,42 @@ def spell_dispatcher() -> Callable[[Any], str]:
     return spell
 
 
+def base_enchantment(power: int, element: str, target: str) -> str:
+    return f"{element} spell hits {target} for {power} damage"
+
+
+if __name__ == "__main__":
+    nums = [10, 20, 30, 40]
+    print()
+    print("Testing spell reducer...")
+    print(f"Sum: {spell_reducer(nums, 'add')}")
+    print(f"Product: {spell_reducer(nums, 'multiply')}")
+    print(f"Max: {spell_reducer(nums, 'max')}")
+    print(f"Min: {spell_reducer(nums, 'min')}")
+    try:
+        spell_reducer(nums, "unknown")
+    except ValueError as e:
+        print(f"Error: {e}")
+
+    print()
+    print("Testing memoized fibonacci...")
+    print(f"Fib(0): {memoized_fibonacci(0)}")
+    print(f"Fib(1): {memoized_fibonacci(1)}")
+    print(f"Fib(10): {memoized_fibonacci(10)}")
+    print(f"Fib(15): {memoized_fibonacci(15)}")
+    print(memoized_fibonacci.cache_info())
+
+    test_spell = spell_dispatcher()
+    print()
+    print("Testing spell dispatcher...")
+    print(test_spell(42))
+    print(test_spell("fireball"))
+    print(test_spell([1, 2, 3]))
+    print(test_spell(3.14))
+
+    enchanters = partial_enchanter(base_enchantment)
+    print()
+    print("Testing partial enchanter...")
+    print(enchanters['fire']('Dragon'))
+    print(enchanters['water']('Golem'))
+    print(enchanters['earth']('Troll'))
